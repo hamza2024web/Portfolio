@@ -2,64 +2,87 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Github, Linkedin, Mail, ExternalLink, Download, ArrowDown } from "lucide-react"
+import { Github, Linkedin, Mail, Phone, Download, ArrowDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AnimatedText, ClientMotion } from "@/components/client-animations"
+import { useLanguage } from "@/lib/language-context"
+import { Badge } from "@/components/ui/badge"
 
 export function HeroSection() {
+  const { t } = useLanguage()
+
   return (
     <section className="relative pt-28 pb-20 md:pt-36 md:pb-28 px-4 overflow-hidden">
       <div className="container mx-auto max-w-6xl">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
           <div className="w-full md:w-1/2 space-y-6">
+            <ClientMotion
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <Badge className="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border-green-300 dark:border-green-700 px-3 py-1">
+                <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                {t.hero.availableText}
+              </Badge>
+            </ClientMotion>
+
             <div>
-              <AnimatedText text="Hamza Akroubi" className="text-4xl md:text-5xl font-bold tracking-tight" />
+              <AnimatedText text={t.hero.title} className="text-4xl md:text-5xl font-bold tracking-tight" />
               <AnimatedText
-                text="Java Full Stack Developer"
-                className="text-2xl md:text-3xl font-semibold mt-2 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent"
+                text={t.hero.subtitle}
+                className="text-2xl md:text-3xl font-semibold mt-2 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"
                 once={true}
               />
-              <div className="mt-3 flex items-center gap-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-sm text-green-600 dark:text-green-400 font-medium">Disponible pour missions</span>
-              </div>
+              <ClientMotion
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+              >
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Java Spring Boot & Angular Expert</p>
+              </ClientMotion>
             </div>
+
             <ClientMotion
               className="text-lg text-gray-600 dark:text-gray-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
             >
-              Développeur Full Stack basé à Agadir, passionné par la création d'applications web robustes et modernes.
-              Spécialisé dans l'écosystème Java/Spring Boot et Angular, avec expertise en DevOps et méthodologies
-              Agiles.
+              {t.hero.description}
             </ClientMotion>
+
             <ClientMotion
               className="flex flex-wrap gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
             >
-              <Button asChild className="relative overflow-hidden group">
+              <Button
+                asChild
+                className="relative overflow-hidden group bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+              >
                 <Link href="#contact">
-                  <span className="relative z-10">Me Contacter</span>
-                  <span className="absolute inset-0 bg-white dark:bg-gray-800 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+                  <Mail className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
+                  <span className="relative z-10">{t.hero.getInTouch}</span>
                 </Link>
               </Button>
               <Button variant="outline" asChild className="relative overflow-hidden group bg-transparent">
                 <Link href="#projects">
-                  <span className="relative z-10">Voir Projets</span>
-                  <span className="absolute inset-0 bg-blue-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+                  <span className="relative z-10">{t.hero.viewProjects}</span>
+                  <ArrowDown className="w-4 h-4 ml-2 group-hover:translate-y-1 transition-transform" />
+                  <span className="absolute inset-0 bg-purple-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
                 </Link>
               </Button>
               <Button variant="secondary" asChild className="relative overflow-hidden group">
-                <Link href="/documents/hamza-akroubi-cv.pdf" target="_blank" download>
-                  <Download className="w-4 h-4 mr-2" />
-                  <span className="relative z-10">CV</span>
-                  <span className="absolute inset-0 bg-blue-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+                <Link href="/documents/hamza-akroubi-resume.pdf" target="_blank" download>
+                  <Download className="w-4 h-4 mr-2 group-hover:translate-y-1 transition-transform" />
+                  <span className="relative z-10">{t.hero.resume}</span>
+                  <span className="absolute inset-0 bg-purple-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
                 </Link>
               </Button>
             </ClientMotion>
+
             <ClientMotion
               className="flex gap-4 pt-2"
               initial={{ opacity: 0 }}
@@ -70,6 +93,7 @@ export function HeroSection() {
                 href="https://linkedin.com/in/hamzaakroubi"
                 target="_blank"
                 className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors transform hover:scale-110 duration-300"
+                aria-label="LinkedIn"
               >
                 <Linkedin className="w-6 h-6" />
               </Link>
@@ -77,23 +101,27 @@ export function HeroSection() {
                 href="https://github.com/hamza2024web"
                 target="_blank"
                 className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors transform hover:scale-110 duration-300"
+                aria-label="GitHub"
               >
                 <Github className="w-6 h-6" />
               </Link>
               <Link
                 href="mailto:hamzaakroubi1528@gmail.com"
                 className="text-gray-600 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors transform hover:scale-110 duration-300"
+                aria-label="Email"
               >
                 <Mail className="w-6 h-6" />
               </Link>
               <Link
                 href="tel:+212679745889"
                 className="text-gray-600 hover:text-green-500 dark:text-gray-400 dark:hover:text-green-400 transition-colors transform hover:scale-110 duration-300"
+                aria-label="Phone"
               >
-                <ExternalLink className="w-6 h-6" />
+                <Phone className="w-6 h-6" />
               </Link>
             </ClientMotion>
           </div>
+
           <ClientMotion
             className="w-full md:w-1/2 flex justify-center"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -106,8 +134,8 @@ export function HeroSection() {
             }}
           >
             <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl">
-              <Image src="/images/profile.png" alt="Hamza Akroubi" fill className="object-cover" priority />
-              <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-cyan-600/20 mix-blend-overlay" />
+              <Image src="/images/profile.png" alt={t.hero.title} fill className="object-cover" priority />
+              <div className="absolute inset-0 bg-gradient-to-tr from-purple-600/20 to-blue-600/20 mix-blend-overlay" />
             </div>
           </ClientMotion>
         </div>
@@ -118,7 +146,10 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 1, repeat: Number.POSITIVE_INFINITY, repeatType: "reverse" }}
         >
-          <Link href="#about" className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+          <Link
+            href="#about"
+            className="text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+          >
             <ArrowDown className="w-6 h-6" />
           </Link>
         </ClientMotion>

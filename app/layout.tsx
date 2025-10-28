@@ -1,6 +1,6 @@
 import type React from "react"
 import "@/app/globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
+import { LanguageProvider } from "@/lib/language-context"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { Toaster } from "@/components/ui/toaster"
@@ -8,9 +8,9 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Muhammad Murad | AI Engineer",
+  title: "Hamza Akroubi | Développeur Java Full Stack",
   description:
-    "Portfolio of Muhammad Murad, AI Engineer specializing in machine learning, deep learning, and data science",
+    "Portfolio de Hamza Akroubi, Développeur Java Full Stack spécialisé en Spring Boot, Angular et développement web moderne",
     generator: 'v0.app'
 }
 
@@ -20,15 +20,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="fr" suppressHydrationWarning>
       <head>
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script src="https://cdn.tailwindcss.com/3.3.2"></script>
       </head>
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+      <body className="bg-white">
+        <LanguageProvider>
           {children}
           <Toaster />
-        </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   )

@@ -3,13 +3,15 @@
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
-import { ThemeToggle } from "./theme-toggle"
+import { LanguageToggle } from "./language-toggle"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
+import { useLanguage } from "@/lib/language-context"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,11 +31,12 @@ export function Navbar() {
   }
 
   const navLinks = [
-    { name: "À Propos", href: "#about" },
-    { name: "Expérience", href: "#experience" },
-    { name: "Projets", href: "#projects" },
-    { name: "Compétences", href: "#skills" },
-    { name: "Contact", href: "#contact" },
+    { name: t.nav.about, href: "#about" },
+    { name: t.nav.experience, href: "#experience" },
+    { name: t.nav.projects, href: "#projects" },
+    { name: t.nav.skills, href: "#skills" },
+    { name: t.nav.education, href: "#education" },
+    { name: t.nav.contact, href: "#contact" },
   ]
 
   return (
@@ -55,9 +58,9 @@ export function Navbar() {
           >
             <Link
               href="/"
-              className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent"
+              className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"
             >
-              Hamza Akroubi
+              {t.hero.title}
             </Link>
           </motion.div>
 
@@ -78,10 +81,10 @@ export function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className="px-3 py-2 text-sm font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group"
+                    className="px-3 py-2 text-sm font-medium hover:text-purple-600 dark:hover:text-purple-400 transition-colors relative group"
                   >
                     {link.name}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 group-hover:w-full transition-all duration-300"></span>
                   </Link>
                 </motion.div>
               ))}
@@ -92,13 +95,13 @@ export function Navbar() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
-              <Link href="/documents/hamza-akroubi-cv.pdf" target="_blank" download>
+              <Link href="/documents/hamza-akroubi-resume.pdf" target="_blank" download>
                 <Button variant="outline" size="sm" className="relative overflow-hidden group bg-transparent">
-                  <span className="relative z-10">Télécharger CV</span>
-                  <span className="absolute inset-0 bg-blue-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+                  <span className="relative z-10">{t.nav.downloadResume}</span>
+                  <span className="absolute inset-0 bg-purple-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
                 </Button>
               </Link>
-              <ThemeToggle />
+              <LanguageToggle />
             </motion.div>
           </div>
 
@@ -109,10 +112,10 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <ThemeToggle />
+            <LanguageToggle />
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-200 hover:text-purple-600 dark:hover:text-purple-400 focus:outline-none"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -142,7 +145,7 @@ export function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    className="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="block px-3 py-2 rounded-md text-base font-medium hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
                     {link.name}
@@ -151,13 +154,13 @@ export function Navbar() {
               ))}
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }}>
                 <Link
-                  href="/documents/hamza-akroubi-cv.pdf"
+                  href="/documents/hamza-akroubi-resume.pdf"
                   target="_blank"
                   download
-                  className="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  className="block px-3 py-2 rounded-md text-base font-medium hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
-                  Télécharger CV
+                  {t.nav.downloadResume}
                 </Link>
               </motion.div>
             </div>
